@@ -19,6 +19,7 @@
 # IDE specific files
 ### VS Code ###
 .vscode/
+.vscode-test/
 /.history/
 /*.code-workspace
 
@@ -31,7 +32,6 @@
 *.class
 *.project
 .classpath
-.vscode-test/
 
 ### Sublime ###
 /*.sublime-project
