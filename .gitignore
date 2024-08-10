@@ -1,67 +1,78 @@
-.DS_Store
-*.[56789ao]
-*.a[56789o]
-*.so
-*.pyc
-._*
-.nfs.*
-[56789a].out
-*~
-*.orig
-*.rej
-*.exe
-.*.swp
-core
-*.cgo*.go
-*.cgo*.c
-_cgo_*
-_obj
-_test
-_testmain.go
-
-/VERSION.cache
+# Go build artifacts
 /bin/
-/build.out
-/doc/articles/wiki/*.bin
-/goinstall.log
-/last-change
-/misc/cgo/life/run.out
-/misc/cgo/stdio/run.out
-/misc/cgo/testso/main
-/src/*.*/
-/src/cmd/cgo/zdefaultcc.go
-/src/cmd/dist/dist
-/src/cmd/go/internal/cfg/zdefaultcc.go
-/src/cmd/internal/objabi/zbootstrap.go
-/src/go/build/zcgo.go
-/src/go/doc/headscan
-/src/internal/buildcfg/zbootstrap.go
-/src/internal/runtime/sys/zversion.go
-/src/unicode/maketables
-/src/time/tzdata/zzipdata.go
-/test.out
-/test/garbage/*.out
-/test/pass.out
-/test/run.out
-/test/times.out
-
-# Binaries for programs and plugins
+/pkg/
+/dist/
+/vendor/
+/coverage.out
+*.exe
 *.exe~
 *.dll
+*.so
 *.dylib
-
-# Output of the go coverage tool, specifically when used with LiteIDE
+*.test
 *.out
-.idea
 
-# Go workspace file
-go.work
-go.work.sum
+# Go modules
+/go.sum
+/go.mod
 
-# env file
-.env
+# IDE specific files
+### VS Code ###
+.vscode/
+/.history/
+/*.code-workspace
 
-# This file includes artifacts of Go build that should not be checked in.
-# For files created by specific development environment (e.g. editor),
-# use alternative ways to exclude files from git.
-# For example, set up .git/info/exclude or use a global .gitignore.
+### JetBrains Rider ###
+.idea/
+/*.iml
+*.ipr
+*.iws
+.idea_modules/
+*.class
+*.project
+.classpath
+.vscode/
+.vscode-test/
+.idea/
+.idea_modules/
+
+### Sublime ###
+/*.sublime-project
+/*.sublime-workspace
+
+### Eclipse ###
+/.metadata
+/.classpath
+/.project
+/.settings/
+/bin/
+/tmp/
+
+### GoLand ###
+.idea/
+*.iws
+out/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs and databases
+*.log
+*.sqlite
+*.sqlite3
+*.env
+*.local
+
+# Coverage results
+*.coverprofile
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Git directories
+.git/
+*.patch

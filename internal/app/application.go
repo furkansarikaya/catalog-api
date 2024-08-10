@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/furkansarikaya/catalog-api/internal/config"
+	"github.com/furkansarikaya/catalog-api/config"
 	"github.com/gin-gonic/gin"
 	"log"
 )
