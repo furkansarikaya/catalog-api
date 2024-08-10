@@ -31,10 +31,7 @@
 *.class
 *.project
 .classpath
-.vscode/
 .vscode-test/
-.idea/
-.idea_modules/
 
 ### Sublime ###
 /*.sublime-project
@@ -45,12 +42,9 @@
 /.classpath
 /.project
 /.settings/
-/bin/
 /tmp/
 
 ### GoLand ###
-.idea/
-*.iws
 out/
 
 # OS generated files
