@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"github.com/furkansarikaya/catalog-api/internal/models"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -63,6 +64,17 @@ func SetupDatabase(cfg *Config) (*gorm.DB, error) {
 		log.Fatalf("Error connecting to the database: %v", err)
 		return nil, err
 	}
+
+	// Veritabanı şemasını güncelle
+	err = db.AutoMigrate(
+		&models.Product{},
+		&models.Category{},
+		&models.ProductCategory{},
+	)
+	if err != nil {
+		log.Fatalf("Error during AutoMigrate: %v", err)
+	}
+
 	return db, nil
 }
 

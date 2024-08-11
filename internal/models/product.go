@@ -3,7 +3,7 @@ package models
 type Product struct {
 	ID          uint   `gorm:"primary_key"`
 	Name        string `gorm:"type:varchar(100);not null"`
-	Description string `gorm:"type:nvarchar(max)"`
+	Description string `gorm:"type:varchar"`
 	Price       float64
 	Stock       int `gorm:"default:0"`
 }
