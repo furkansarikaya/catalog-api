@@ -33,7 +33,7 @@ func (p productService) GetAllProducts() ([]dtos.ProductDto, error) {
 			return nil, err
 		}
 		productDTO := toProductDTO(product)
-		productDTO.Categories = toCategoryDTOs(categories)
+		productDTO.Categories = toCategoryDTOsByProduct(categories)
 		productsDTOS = append(productsDTOS, productDTO)
 	}
 	return productsDTOS, nil
@@ -49,12 +49,12 @@ func (p productService) GetProductByID(id uint) (*dtos.ProductDto, error) {
 		return nil, err
 	}
 	productDTO := toProductDTO(*product)
-	productDTO.Categories = toCategoryDTOs(categories)
+	productDTO.Categories = toCategoryDTOsByProduct(categories)
 
 	return &productDTO, nil
 }
 
-func (p productService) CreateProduct(productDTO dtos.ProductDto) (dtos.ProductDto, error) {
+func (p productService) CreateProduct(productDTO dtos.ProductDto) (*dtos.ProductDto, error) {
 	product := toProductEntity(productDTO)
 
 	if err := p.productRepo.Save(&product); err != nil {
@@ -66,12 +66,14 @@ func (p productService) CreateProduct(productDTO dtos.ProductDto) (dtos.ProductD
 		return nil, err
 	}
 
-	return toProductDTO(product), nil
+	result := toProductDTO(product)
+	return &result, nil
 }
 
-func (p productService) UpdateProduct(productDTO dtos.ProductDto) (dtos.ProductDto, error) {
+func (p productService) UpdateProduct(productDTO dtos.ProductDto) (*dtos.ProductDto, error) {
 	product := toProductEntity(productDTO)
 	if err := p.productRepo.Update(&product); err != nil {
+
 		return nil, err
 	}
 
@@ -80,7 +82,8 @@ func (p productService) UpdateProduct(productDTO dtos.ProductDto) (dtos.ProductD
 		return nil, err
 	}
 
-	return toProductDTO(product), nil
+	result := toProductDTO(product)
+	return &result, nil
 }
 
 func (p productService) DeleteProduct(id uint) error {
@@ -117,7 +120,7 @@ func toProductEntity(dto dtos.ProductDto) models.Product {
 }
 
 // toCategoryDTOs converts a slice of Category models to a slice of CategoryDTOs
-func toCategoryDTOs(categories []models.Category) []dtos.CategoryDTO {
+func toCategoryDTOsByProduct(categories []models.Category) []dtos.CategoryDTO {
 	var categoryDTOs []dtos.CategoryDTO
 	for _, category := range categories {
 		categoryDTOs = append(categoryDTOs, dtos.CategoryDTO{

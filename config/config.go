@@ -3,6 +3,8 @@ package config
 import (
 	"fmt"
 	"github.com/joho/godotenv"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 	"log"
 	"os"
 )
@@ -51,6 +53,17 @@ func (c *Config) GetDatabaseConnectionString() string {
 		"host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		c.DBHost, c.DBPort, c.DBUser, c.DBPassword, c.DBName, c.SSLMode,
 	)
+}
+
+// SetupDatabase, PostgreSQL veritabanı bağlantısını başlatır ve döndürür
+func SetupDatabase(cfg *Config) (*gorm.DB, error) {
+	dsn := cfg.GetDatabaseConnectionString()
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		log.Fatalf("Error connecting to the database: %v", err)
+		return nil, err
+	}
+	return db, nil
 }
 
 func init() {

@@ -30,7 +30,7 @@ func (s *categoryService) GetAllCategories() ([]dtos.CategoryDTO, error) {
 		return nil, err
 	}
 
-	return toCategoryDTOs(categories), nil
+	return toCategoryDTOsByCategory(categories), nil
 }
 
 func (s *categoryService) GetCategoryByID(id uint) (*dtos.CategoryDTO, error) {
@@ -39,11 +39,11 @@ func (s *categoryService) GetCategoryByID(id uint) (*dtos.CategoryDTO, error) {
 		return nil, err
 	}
 
-	categoryDTO := toCategoryDTO(category)
+	categoryDTO := toCategoryDTO(*category)
 	return &categoryDTO, nil
 }
 
-func (s *categoryService) CreateCategory(categoryDTO dtos.CategoryDTO) (dtos.CategoryDTO, error) {
+func (s *categoryService) CreateCategory(categoryDTO dtos.CategoryDTO) (*dtos.CategoryDTO, error) {
 	category := models.Category{
 		Name: categoryDTO.Name,
 	}
@@ -52,10 +52,11 @@ func (s *categoryService) CreateCategory(categoryDTO dtos.CategoryDTO) (dtos.Cat
 		return nil, err
 	}
 
-	return toCategoryDTO(category), nil
+	result := toCategoryDTO(category)
+	return &result, nil
 }
 
-func (s *categoryService) UpdateCategory(categoryDTO dtos.CategoryDTO) (dtos.CategoryDTO, error) {
+func (s *categoryService) UpdateCategory(categoryDTO dtos.CategoryDTO) (*dtos.CategoryDTO, error) {
 	category := models.Category{
 		ID:   categoryDTO.ID,
 		Name: categoryDTO.Name,
@@ -65,7 +66,8 @@ func (s *categoryService) UpdateCategory(categoryDTO dtos.CategoryDTO) (dtos.Cat
 		return nil, err
 	}
 
-	return toCategoryDTO(category), nil
+	result := toCategoryDTO(category)
+	return &result, nil
 }
 
 func (s *categoryService) DeleteCategory(id uint) error {
@@ -79,7 +81,7 @@ func toCategoryDTO(category models.Category) dtos.CategoryDTO {
 	}
 }
 
-func toCategoryDTOs(categories []*models.Category) []dtos.CategoryDTO {
+func toCategoryDTOsByCategory(categories []*models.Category) []dtos.CategoryDTO {
 	var categoryDTOs []dtos.CategoryDTO
 	for _, category := range categories {
 		categoryDTOs = append(categoryDTOs, toCategoryDTO(*category))

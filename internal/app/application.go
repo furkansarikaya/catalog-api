@@ -2,6 +2,9 @@ package app
 
 import (
 	"github.com/furkansarikaya/catalog-api/config"
+	"github.com/furkansarikaya/catalog-api/internal/controllers"
+	"github.com/furkansarikaya/catalog-api/internal/repositories"
+	"github.com/furkansarikaya/catalog-api/internal/services"
 	"github.com/gin-gonic/gin"
 	"log"
 )
@@ -30,12 +33,25 @@ func init() {
 func StartApplication() {
 	cfg := config.LoadConfig()
 
+	// Veritabanı bağlantısı
+	db, err := config.SetupDatabase(cfg)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Repository ve Service katmanları
+	categoryRepo := repositories.NewCategoryRepository(db)
+	categoryService := services.NewCategoryService(categoryRepo)
+
+	// CategoryController'ı başlat
+	controllers.InitCategoryController(categoryService)
+
 	mapUrls()
 
 	log.Println("Server is running on", cfg.ServerAddress)
 
-	err := router.Run(cfg.ServerAddress)
-	if err != nil {
-		log.Fatal(err)
+	errRouter := router.Run(cfg.ServerAddress)
+	if errRouter != nil {
+		log.Fatal(errRouter)
 	}
 }
