@@ -8,6 +8,7 @@ import (
 
 type ProductCategoryRepository interface {
 	UpdateProductCategories(productID uint, categoryIDList []uint) error
+	GetCategoriesByProductID(productID uint) ([]models.Category, error)
 }
 
 type productCategoryRepository struct {
@@ -50,4 +51,14 @@ func (p productCategoryRepository) UpdateProductCategories(productID uint, categ
 
 	// Commit the transaction
 	return tx.Commit().Error
+}
+
+func (p productCategoryRepository) GetCategoriesByProductID(productID uint) ([]models.Category, error) {
+	var categories []models.Category
+	err := p.db.Table("categories").
+		Select("categories.id,categories.name").
+		Joins("left join product_categories on categories.id = product_categories.category_id").
+		Where("product_categories.product_id = ?", productID).
+		Scan(&categories).Error
+	return categories, err
 }
