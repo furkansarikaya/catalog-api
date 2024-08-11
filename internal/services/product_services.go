@@ -84,8 +84,7 @@ func (p productService) UpdateProduct(productDTO dtos.ProductDto) (dtos.ProductD
 }
 
 func (p productService) DeleteProduct(id uint) error {
-	//TODO implement me
-	panic("implement me")
+	return p.productRepo.Delete(id)
 }
 
 func NewProductService(productRepo repositories.ProductRepository, productCategoryRepo repositories.ProductCategoryRepository) ProductService {
